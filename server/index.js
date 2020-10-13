@@ -14,6 +14,15 @@ app.get('/user/:id', (req, res) => {
     ctrl.getCreator(req, usersPath).then(data => res.send(data))
 })
 
+app.get('/chats/:id', (req, res) => {
+    let id = req.params.id;
+    fs.readFile(`${usersPath}/${id}.json`, 'UTF-8', (err, data) => {
+        if(!err){
+            res.send(data)
+        }
+    })
+})
+
 app.get("/messages", (req, res) => {
     fs.readFile(`${messagesPath}/messages.json`, 'UTF-8', (err, data) => {
         if (!err) {
@@ -55,7 +64,6 @@ app.put('/messages/delete', (req, res) => {
                     const chatData = JSON.parse(data);
                     let msgToDelete = chatData.messages.findIndex(msg => msg === request.id)
                     msgToDelete >= 0 ? chatData.messages.splice(msgToDelete, 1) : msgToDelete
-                    console.log(chatData);
 
                     fs.writeFile(`${chatsPath}/${request.chatId}.json`, JSON.stringify(chatData), (err) => {
                         if (!err) {
