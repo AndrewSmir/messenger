@@ -1,0 +1,20 @@
+.chats {
+    background-color: white;
+    width: 20%;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatItems {
+    width: 80%;
+}
+
+.chatItem {
+    display: flex;
+    justify-content: space-between;
+}
