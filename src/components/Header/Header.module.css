@@ -1,0 +1,10 @@
+.header {
+    background-color: green;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.header div {
+    margin: 5px;
+}
