@@ -1,3 +1,23 @@
+import * as axios from "axios";
+
+export const chatsAPI = {
+    getChats(userId){
+        return axios.get(`/chats/${userId}`).then(response => response.data.chats)
+    }
+}
+
+export const messagesApi = {
+    getMessages(){
+        return axios.get('/messages').then(response => response.data)
+    },
+    sendMessage(sender, text, chatId){
+        return axios.post('/messages/addMessage', {sender, text, chatId}).then(response => response.data)
+    },
+    deleteMessage(chatId, id){
+        return axios.put('/messages/delete', {chatId, id}).then(response => console.log(response.data))
+    }
+}
+
 /*
   const changeInfo = () => {
     async function getMessagesFromChat(){

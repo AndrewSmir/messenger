@@ -15,6 +15,13 @@
 }
 
 .chatItem {
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
+}
+
+.chatItem > div {
+    margin: 5px;
 }

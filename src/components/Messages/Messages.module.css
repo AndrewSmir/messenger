@@ -10,12 +10,20 @@
 }
 
 .messages{
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    flex-basis: 100%;
     width: 95%;
     margin: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
+    border-bottom: 1px solid black;
     background-color: white;
+}
+
+.messagesItem{
+    margin: 5px;
+    padding: 5px;
+    background-color: lightskyblue;
 }
 
 .input{
