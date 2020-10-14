@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import Messages from "./Messages";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";

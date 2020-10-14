@@ -1,6 +1,6 @@
 {
   "_id": "u-1",
-  "name": "Vovan",
+  "id": "Vovan",
   "password": "lorem",
   "contacts": ["contact-1", "contact-2", "contact-3"],
   "chats": [

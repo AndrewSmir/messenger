@@ -18,6 +18,16 @@ export const messagesApi = {
     }
 }
 
+export const authApi = {
+    login(data){
+        return axios.put('/auth', data).then(response => response.data)
+    },
+    registerUser(data){
+      return axios.post('auth/register', data).then(response => response.data)
+    }
+}
+
+
 /*
   const changeInfo = () => {
     async function getMessagesFromChat(){

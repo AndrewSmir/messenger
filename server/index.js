@@ -17,7 +17,7 @@ app.get('/user/:id', (req, res) => {
 app.get('/chats/:id', (req, res) => {
     let id = req.params.id;
     fs.readFile(`${usersPath}/${id}.json`, 'UTF-8', (err, data) => {
-        if(!err){
+        if (!err) {
             res.send(data)
         }
     })
@@ -77,6 +77,54 @@ app.put('/messages/delete', (req, res) => {
         })
 })
 
+
+app.put('/auth', (req, res) => {
+    const userId = req.body.login
+    fs.readFile(`${usersPath}/${userId}.json`, 'UTF-8', (err, data) => {
+        if (!err) {
+            if (JSON.parse(data).password === req.body.password) {
+                res.send(data)
+            } else {
+                res.send({
+                    error: true,
+                    message: 'Incorrect username / password data'
+                })
+            }
+        } else {
+            res.send({
+                error: true,
+                message: 'User is not registered'
+            })
+        }
+    })
+})
+
+app.post('/auth/register', (req, res) => {
+    const userId = req.body.login
+    fs.readFile(`${usersPath}/${userId}.json`, 'UTF-8', (err, data) => {
+        if (!err) {
+            res.send({
+                error: true,
+                message: 'User with this login is already registered'
+            })
+        } else {
+            let newUser = {
+                id: userId,
+                password: req.body.password,
+                contacts: [],
+                chats: []
+            }
+            fs.writeFile(`${usersPath}/${userId}.json`, JSON.stringify(newUser, null, ' '), err=> {
+                if (!err){
+                    res.send({
+                        error: true,
+                        message: 'User created. Now you can enter to the messenger'
+                    })
+                }
+            })
+        }
+    })
+})
 
 app.listen(3300, () => {
     console.log('Server @ 3300');
