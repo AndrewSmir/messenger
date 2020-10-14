@@ -1,0 +1,47 @@
+.auth{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%
+}
+
+.form input{
+    flex: 1;
+}
+
+.buttons{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.welcome {
+    margin-bottom: 5px;
+}
+
+.redirect {
+    margin-top: 50px;
+    width: 90%;
+    text-align: end;
+    opacity: 0.8;
+}
+
+.link {
+    color: blue;
+    border-bottom: 1px solid blue;
+}
+
+.errorField{
+    margin: 5px;
+    color: red
+}
