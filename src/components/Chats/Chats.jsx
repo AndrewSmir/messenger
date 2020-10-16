@@ -1,26 +1,33 @@
 import React from "react";
 import s from "./Chats.module.css"
-import Button from "@material-ui/core/Button";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {NavLink} from "react-router-dom";
+import AddChat from "./AddChat";
 
-const Chats = ({chats}) => {
+const Chats = (props) => {
+
+    const {chats, deleteChat, currentUser, ...restProps} = props
+
+
     const chatItem = chats.map(chat => {
-       return <NavLink key={chat.id} to={`/chats/${chat.id}`}>
+        return <div>
             <div className={s.chatItem}>
-                <div>{chat.name}</div>
-                <div><DeleteIcon/></div>
+                <NavLink key={chat.id} to={`/chats/${chat.id}`}>
+                    <div>{chat.name}</div>
+                </NavLink>
+                <div onClick={() => deleteChat(chat.id, currentUser, chat.name)}><DeleteIcon/></div>
             </div>
-        </NavLink>
+        </div>
+
     })
+
     return (
         <div className={s.chats}>
+
             <div className={s.chatItems}>
                 {chatItem}
             </div>
-            <Button style={{width: "80%", marginBottom: "5px"}} variant="outlined" color="primary">
-                Add Chat
-            </Button>
+            <AddChat {...restProps} currentUser={currentUser}/>
         </div>
     )
 }

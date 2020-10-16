@@ -5,10 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import Preloader from "../common/preloader/Preloader";
 import NewMessageAdd from "./NewMessageAdd";
 
-const Messages = ({messages, chatId, sendMessage, deleteMessage, isLoading}) => {
+const Messages = ({messages, deleteMessage, isLoading, currentUser, chatId, ...restProps}) => {
 
     const messageItem = messages.map(message => {
-       return <Paper elevation={3}  className={s.messagesItem} key={message.id} style={{alignSelf: message.sender === 'bot' ? 'flex-start' : 'flex-end', backgroundColor:'lightskyblue'}}>
+       return <Paper elevation={3}  className={s.messagesItem} key={message.id} style={{alignSelf: message.sender === currentUser ? 'flex-end' : 'flex-start', backgroundColor:'lightskyblue'}}>
            <p><strong>{message.sender}:</strong> {message.text} <DeleteForeverIcon onClick={()=>deleteMessage(chatId, message.id)} fontSize="small"/> </p>
        </Paper>
    })
@@ -20,7 +20,7 @@ const Messages = ({messages, chatId, sendMessage, deleteMessage, isLoading}) => 
                 {!isLoading && messageItem}
             </div>
             <div className={s.input}>
-                <NewMessageAdd sendMessage={sendMessage} chatId={chatId}/>
+                <NewMessageAdd currentUser={currentUser} chatId={chatId} {...restProps}/>
             </div>
         </div>
     )

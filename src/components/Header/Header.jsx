@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 const Header = (props) => {
 
     const {logout, isAuth, user} = props
-    console.log(user);
+
     return (
         <div className={s.header}>
                 <div>

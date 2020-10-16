@@ -1,24 +1,12 @@
 const fs = require('fs')
 
 module.exports = {
-
     getCreator(req, pathToFile){
         let id = req.params.id;
         return new Promise((resolve, rej)=>{
             fs.readFile(`${pathToFile}/${id}.json`,'UTF-8', (err, data)=>{
                 if(!err){
                     resolve(data)
-                } else {
-                    let newChat = {
-                        _id: req.params.id,
-                        users: [],
-                        messages: []
-                    }
-                    fs.writeFile(`${pathToFile}/${req.params.id}.json`, JSON.stringify(newChat, null, ' '), err=> {
-                        if (!err){
-                            resolve({status: true})
-                        }
-                    })
                 }
             })
         })
@@ -70,4 +58,23 @@ module.exports = {
             })
         })
     },
+
+    addChatToUser(pathToFile, mainUser, additionalUser, chatId){
+        fs.readFile(`${pathToFile}/${mainUser}.json`, 'UTF-8', (err, data) => {
+            const userData = JSON.parse(data)
+            userData.chats = [...userData.chats, {
+                id: `c-${chatId}`,
+                name: additionalUser
+            }]
+            fs.writeFile(`${pathToFile}/${mainUser}.json`, JSON.stringify(userData, null, ' '), err => {})
+        })
+    },
+
+    deleteUserChat(pathToFile, user, chatId){
+        fs.readFile(`${pathToFile}/${user}.json`, 'UTF-8', (err, data) => {
+            const userData = JSON.parse(data)
+            userData.chats = userData.chats.filter(chat => chat.id !== chatId)
+            fs.writeFile(`${pathToFile}/${user}.json`, JSON.stringify(userData, null, ' '), err => {})
+        })
+    }
 }

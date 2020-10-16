@@ -57,7 +57,7 @@ export const logout = () => ({type: LOGOUT})
 export const getUserDataTC = (loginData) => async dispatch =>{
     const userData = await authApi.login(loginData)
     if (!userData.error) {
-        dispatch(setUser(loginData))
+        dispatch(setUser(userData))
         dispatch(hideError())
     } else {
         dispatch(showError(userData.message))

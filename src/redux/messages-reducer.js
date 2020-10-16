@@ -24,7 +24,6 @@ const messagesReducer = (state = initialState, action) => {
             }
 
         case TOGGLE_LOADING:
-            console.log(action)
             return {
                 ...state,
                 isLoading: !state.isLoading
@@ -47,8 +46,8 @@ const toggleLoading = () => ({type: TOGGLE_LOADING})
 
 export const getMessagesTC = (chatId) => async dispatch => {
     dispatch(toggleLoading())
-    const messages = await messagesApi.getMessages()
-    dispatch(setMessages(messages.filter(message => message.chatId === chatId)))
+    const messages = await messagesApi.getMessages(chatId)
+    dispatch(setMessages(messages))
     dispatch(toggleLoading())
 }
 

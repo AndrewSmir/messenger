@@ -10,23 +10,23 @@ const chatsPath = './server/db/chats'
 const app = express();
 app.use(express.json());
 
-app.get('/user/:id', (req, res) => {
-    ctrl.getCreator(req, usersPath).then(data => res.send(data))
-})
 
 app.get('/chats/:id', (req, res) => {
     let id = req.params.id;
     fs.readFile(`${usersPath}/${id}.json`, 'UTF-8', (err, data) => {
         if (!err) {
-            res.send(data)
+            const chatData = JSON.parse(data)
+            res.send(JSON.stringify(chatData.chats))
         }
     })
 })
 
-app.get("/messages", (req, res) => {
+app.get("/messages/:chatId", (req, res) => {
+    const chatId = req.params.chatId
     fs.readFile(`${messagesPath}/messages.json`, 'UTF-8', (err, data) => {
         if (!err) {
-            res.send(data)
+            const messages = JSON.parse(data)
+            res.send(JSON.stringify((messages.filter(message => message.chatId === chatId))))
         }
     })
 })
@@ -83,7 +83,8 @@ app.put('/auth', (req, res) => {
     fs.readFile(`${usersPath}/${userId}.json`, 'UTF-8', (err, data) => {
         if (!err) {
             if (JSON.parse(data).password === req.body.password) {
-                res.send(data)
+                const userData = JSON.parse(data)
+                res.send(JSON.stringify(userData.id))
             } else {
                 res.send({
                     error: true,
@@ -114,15 +115,72 @@ app.post('/auth/register', (req, res) => {
                 contacts: [],
                 chats: []
             }
-            fs.writeFile(`${usersPath}/${userId}.json`, JSON.stringify(newUser, null, ' '), err=> {
-                if (!err){
+            fs.writeFile(`${usersPath}/${userId}.json`, JSON.stringify(newUser, null, ' '), err => {
+                if (!err) {
                     res.send({
                         error: true,
-                        message: 'User created. Now you can enter to the messenger'
+                        message: 'User was created. Now you can enter to the messenger'
                     })
                 }
             })
         }
+    })
+})
+
+app.put('/chats/invite', (req, res) => {
+    const invitedUser = req.body.userName
+    res.send(`Invitation for ${invitedUser} was successfully send `)
+})
+
+app.put('/chats/add', async (req, res) => {
+    const userId = req.body.userId
+    const companion = req.body.companion
+    let chatId = null
+
+    const chatsArr = await fs.promises.readdir(chatsPath)
+    chatsArr.length < 1 ? chatId = '1' : chatId = Math.max(...chatsArr.map(fileName => +fileName.slice(2, -5))) + 1
+
+    const newChat = {
+        id: `c-${chatId}`,
+        users: [
+            userId,
+            companion
+        ],
+        messages: []
+    }
+
+    fs.writeFile(`${chatsPath}/c-${chatId}.json`, JSON.stringify(newChat, null, ' '), err => {
+    })
+
+    ctrl.addChatToUser(usersPath, userId, companion, chatId)
+    ctrl.addChatToUser(usersPath, companion, userId, chatId)
+
+    res.send('success')
+})
+
+app.post('/chats/delete', async (req, res) => {
+    const chatId = req.body.chatId
+    const userId = req.body.userId
+    const companion = req.body.companion
+
+    fs.readFile(`${messagesPath}/messages.json`, 'UTF-8', (err, data) => {
+        const messages = JSON.parse(data)
+        const restMessages = messages.filter(message => message.chatId !== chatId)
+
+        fs.writeFile(`${messagesPath}/messages.json`, JSON.stringify(restMessages, null, ' '), err => {
+        })
+    })
+
+    fs.unlinkSync(`${chatsPath}/${chatId}.json`)
+    ctrl.deleteUserChat(usersPath, userId, chatId)
+    ctrl.deleteUserChat(usersPath, companion, chatId)
+
+    res.send('success')
+})
+
+app.get('/users', (req, res) => {
+    fs.readdir(usersPath, (err, files) => {
+        res.send(files.map(userName => userName.slice(0, -5)))
     })
 })
 

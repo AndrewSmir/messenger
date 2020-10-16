@@ -5,21 +5,24 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {deleteMessageTC, getMessagesTC, sendMessageTC} from "../../redux/messages-reducer";
 
-const MessagesContainer = ({match, messages, getMessages, sendMessage, deleteMessage, isLoading}) => {
+const MessagesContainer = (props) => {
+
+    const {match, getMessages, ...restProps} = props
 
     useEffect(()=>{
         getMessages(match.params.chatId)
     },[match.params.chatId])
 
     return (
-        <Messages chatId={match.params.chatId} messages={messages} sendMessage={sendMessage} deleteMessage={deleteMessage} isLoading={isLoading}/>
+        <Messages chatId={match.params.chatId} {...restProps}/>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
         messages: state.messagesReducer.messages,
-        isLoading: state.messagesReducer.isLoading
+        isLoading: state.messagesReducer.isLoading,
+        currentUser: state.authReducer.currentUser
     }
 }
 

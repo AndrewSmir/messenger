@@ -1,1 +1,8 @@
-{"_id":"c-2","users":["u-1","bot","u1"],"messages":["m-41","m-42","m-43","m-44"]}
+{
+ "id": "c-2",
+ "users": [
+  "Andrey",
+  "vovan"
+ ],
+ "messages": []
+}

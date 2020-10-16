@@ -24,4 +24,30 @@
 
 .chatItem > div {
     margin: 5px;
+    cursor: pointer;
+}
+
+.chatItem > a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.chatItem > a > div {
+    margin: 5px
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.userItem {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 5px;
+    background-color: oldlace;
+    border-radius: 5px;
 }

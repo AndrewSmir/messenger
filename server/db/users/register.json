@@ -1,11 +1,11 @@
 {
- "id": "test",
- "password": "test",
+ "id": "register",
+ "password": "12345",
  "contacts": [],
  "chats": [
   {
    "id": "c-1",
-   "name": "register"
+   "name": "test"
   }
  ]
 }

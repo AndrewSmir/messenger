@@ -1,10 +1,11 @@
 {
-  "_id": "Vovan",
-  "id": "Vovan",
-  "password": "lorem",
-  "contacts": ["contact-1", "contact-2", "contact-3"],
-  "chats": [
-    {"id":"c-1", "name":"Михалыч"},
-    {"id":"c-2", "name":"Витек"}
-  ]
+ "_id": "Vovan",
+ "id": "Vovan",
+ "password": "1111",
+ "chats": [
+  {
+   "id": "c-2",
+   "name": "Andrey"
+  }
+ ]
 }

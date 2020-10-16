@@ -1,0 +1,11 @@
+{
+ "id": "Andrey",
+ "password": "1234",
+ "contacts": [],
+ "chats": [
+  {
+   "id": "c-2",
+   "name": "vovan"
+  }
+ ]
+}
